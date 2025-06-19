@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(cors());  
 
 // ✅ Health check route
-app.get('/test', (req, res) => {
+app.get('/', (req, res) => {
   res.send('🎉 Evangadi Forum Backend is running!');
 });
 
