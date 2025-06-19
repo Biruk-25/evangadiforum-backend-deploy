@@ -32,9 +32,9 @@ app.use(cors({
 
 
 // ✅ Health check route
-app.get('/', (req, res) => {
-  res.send('🎉 Evangadi Forum Backend is running!');
-});
+// app.get('/', (req, res) => {
+//   res.send('🎉 Evangadi Forum Backend is running!');
+// });
 
 // 📁 Route Imports
 const userRoutes = require('./routes/userRoute');
