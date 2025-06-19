@@ -15,7 +15,6 @@ const generateToken = ({ id, username }) => {
 
 // 📝 Register controller
 const register = async (req, res) => {
- console.log("TOKEN FROM SERVER:", res.data.token);
   const { username, firstname, lastname, email, password } = req.body;
 
   if (!username || !firstname || !lastname || !email || !password) {
@@ -38,25 +37,26 @@ const register = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const [result] = await db.query(
+    const [result] = await pool.query(
       'INSERT INTO users (username, firstname, lastname, email, password) VALUES (?, ?, ?, ?, ?)',
       [username.trim(), firstname.trim(), lastname.trim(), email.trim().toLowerCase(), hashedPassword]
     );
 
-    const user = { id: result.insertId, username: username.trim() };
-    const token = generateToken(user);
+    // const user = { id: result.insertId, username: username.trim() };
+    // const token = generateToken(user);
 
     res.status(StatusCodes.CREATED).json({
       message: 'User registered successfully',
-      token,
-      user: {
-        id: user.id,
-        username: user.username,
-        email: email.trim().toLowerCase(),
-      },
+      // token,
+      // user: {
+      //   id: user.id,
+      //   username: user.usern
+      //   email: email.trim().toLowerCase(),
+      // },
     });
   } catch (err) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Error registering user', error: err.message });
+    console.error('Register Route Error:', err);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Internal Server Error' });
   }
 };
 
