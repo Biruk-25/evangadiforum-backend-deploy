@@ -1,24 +1,30 @@
 const express = require('express');
 const router = express.Router();
-//const db = require('../db/dbConfig');
 
+const {
+  register,
+  login,
+  checkUser,
+  updateUser,
+  deleteUser,
+  } = require('../controller/userController');
 
+const authenticate = require('../middleware/authenticate');
 
-// user controllers
-const {register, login, checkUser} = require('../controller/userController');
+// Register route
+router.post('/register', register);
 
-//authonthication middleware
- const authenticate = require('../middleware/authenticate');
+// Login route
+router.post('/login', login);
 
-//register route
-router.post('/register', register)
+// Check authenticated user
+router.get('/check', authenticate, checkUser);
+// Update user profile
+router.put('/update', authenticate, updateUser);
 
-
-//  login user
-router.post('/login', login)
-
- //checkUser
-router.get('/check',authenticate, checkUser)
+// Delete user account
+router.delete('/delete', authenticate, deleteUser);
 
 module.exports = router;
+
 
