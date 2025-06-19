@@ -8,13 +8,21 @@ const dbConnection = mysql2.createPool({
   database: process.env.DB_NAME,
   connectionLimit: 10
 });
+//Test connection once when server starts
+dbConnection.getConnection((err, connection) => {
+  if (err) {
+    console.error("❌ Database connection failed:", err.message);
+  } else {
+    console.log("✅ Connected to MySQL database");
+    connection.release();
+  }
+});
 
 module.exports = dbConnection.promise();
 
 
 
 
-// const mysql2 = require('mysql2');
 
 // const dbConnection = mysql2.createPool({
 //   user: process.env.USER,
@@ -23,5 +31,3 @@ module.exports = dbConnection.promise();
 //   database: process.env.DATABASE,
 //   connectionLimit: 10
 // });
-
-// module.exports=dbConnection.promise()

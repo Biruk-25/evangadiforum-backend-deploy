@@ -16,7 +16,20 @@ const authenticate = require('./middleware/authenticate');
 
 // 📦 Built-in middleware
 app.use(express.json()); 
-app.use(cors());  
+// app.use(cors());  
+
+//const cors = require('cors');
+
+app.use(cors({
+  origin: 'https://frontend.waluwa.com',
+  credentials: true
+}));
+
+// app.use(cors({
+//   origin: ['http://localhost:3000', 'https://frontend.waluwa.com'],
+//   credentials: true
+// }));
+
 
 // ✅ Health check route
 app.get('/', (req, res) => {
@@ -32,7 +45,7 @@ const answerRoutes = require('./routes/answerRoute');
 app.use('/api/users', userRoutes); 
 app.use('/api/questions', questionRoutes); 
 app.use('/api/answers', authenticate, answerRoutes);   
-app.use(cors({ origin: 'https://evangadiforum-frontend.netlify.app/login' }));
+//app.use(cors({ origin: 'https://evangadiforum-frontend.netlify.app/login' }));
 
 // ▶️ Start server
 app.listen(port, () => {

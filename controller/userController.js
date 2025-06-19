@@ -9,13 +9,13 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 // 🔐 Generate JWT token
 const generateToken = ({ id, username }) => {
-  return jwt.sign({ id, username }, JWT_SECRET, { expiresIn: '1d' });
+  return jwt.sign({ id, username }, JWT_SECRET,{ expiresIn: '1d' });
+  
 };
 
 // 📝 Register controller
 const register = async (req, res) => {
-  console.log("Register request body:", req.body);
-
+ console.log("TOKEN FROM SERVER:", res.data.token);
   const { username, firstname, lastname, email, password } = req.body;
 
   if (!username || !firstname || !lastname || !email || !password) {
@@ -26,8 +26,8 @@ const register = async (req, res) => {
     return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Invalid email format' });
   }
 
-  if (password.length < 6) {
-    return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Password must be at least 6 characters' });
+  if (password.length < 8) {
+    return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Password must be at least 8 characters' });
   }
 
   try {
@@ -37,6 +37,7 @@ const register = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+
     const [result] = await db.query(
       'INSERT INTO users (username, firstname, lastname, email, password) VALUES (?, ?, ?, ?, ?)',
       [username.trim(), firstname.trim(), lastname.trim(), email.trim().toLowerCase(), hashedPassword]
@@ -62,6 +63,7 @@ const register = async (req, res) => {
 // 🔑 Login controller
 const login = async (req, res) => {
   const { email, password } = req.body;
+  console.log('Login response:', res.data);
 
   if (!email || !password) {
     return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Email and password required' });
