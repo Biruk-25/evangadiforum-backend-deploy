@@ -14,6 +14,8 @@ const generateToken = ({ id, username }) => {
 
 // 📝 Register controller
 const register = async (req, res) => {
+  console.log("Register request body:", req.body);
+
   const { username, firstname, lastname, email, password } = req.body;
 
   if (!username || !firstname || !lastname || !email || !password) {
@@ -150,6 +152,8 @@ const updateUser = async (req, res) => {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Failed to update user', error: err.message });
   }
 };
+
+
 
 // ❌ Delete user account
 const deleteUser = async (req, res) => {

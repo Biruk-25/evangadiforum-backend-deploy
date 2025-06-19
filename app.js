@@ -5,7 +5,8 @@ const dotenv = require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
 const app = express(); 
-const port = 5000;
+const port = process.env.PORT || 5000;
+// const port = 5000;
 
 // 📦 DB connection
 require('./db/dbConfig');
@@ -15,7 +16,12 @@ const authenticate = require('./middleware/authenticate');
 
 // 📦 Built-in middleware
 app.use(express.json()); 
-app.use(cors());         
+app.use(cors());  
+
+// ✅ Health check route
+app.get('/test', (req, res) => {
+  res.send('🎉 Evangadi Forum Backend is running!');
+});
 
 // 📁 Route Imports
 const userRoutes = require('./routes/userRoute');
@@ -23,9 +29,10 @@ const questionRoutes = require('./routes/questionRoute');
 const answerRoutes = require('./routes/answerRoute');
 
 // 🛣️ Route Middlewares
-app.use('/api/users', userRoutes); // Public routes for register/login
-app.use('/api/questions', questionRoutes); //  authenticate,
-app.use('/api/answers', authenticate, answerRoutes);     // Protected
+app.use('/api/users', userRoutes); 
+app.use('/api/questions', questionRoutes); 
+app.use('/api/answers', authenticate, answerRoutes);   
+app.use(cors({ origin: 'https://evangadiforum-frontend.netlify.app/login' }));
 
 // ▶️ Start server
 app.listen(port, () => {
