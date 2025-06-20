@@ -37,22 +37,22 @@ const register = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const [result] = await pool.query(
+    const [result] = await db.query(
       'INSERT INTO users (username, firstname, lastname, email, password) VALUES (?, ?, ?, ?, ?)',
       [username.trim(), firstname.trim(), lastname.trim(), email.trim().toLowerCase(), hashedPassword]
     );
 
-    // const user = { id: result.insertId, username: username.trim() };
-    // const token = generateToken(user);
+    const user = { id: result.insertId, username: username.trim() };
+    const token = generateToken(user);
 
     res.status(StatusCodes.CREATED).json({
       message: 'User registered successfully',
       // token,
-      // user: {
-      //   id: user.id,
-      //   username: user.usern
-      //   email: email.trim().toLowerCase(),
-      // },
+      user: {
+        id: user.id,
+        username: user.username,
+        email: email.trim().toLowerCase(),
+      },
     });
   } catch (err) {
     console.error('Register Route Error:', err);
