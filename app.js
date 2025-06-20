@@ -7,6 +7,7 @@ const express = require('express');
 const app = express(); 
 const port = process.env.PORT || 5000;
 // const port = 5000;
+console.log("🌍 ENV test:", process.env.DB_USER);
 
 // 📦 DB connection
 require('./db/dbConfig');
@@ -21,7 +22,7 @@ app.use(express.json());
 //const cors = require('cors');
 
 app.use(cors({
-  origin: 'https://frontend.waluwa.com',
+  origin: ['http://localhost:3000', 'https://frontend.waluwa.com'],
   credentials: true
 }));
 
@@ -32,9 +33,9 @@ app.use(cors({
 
 
 // ✅ Health check route
-// app.get('/', (req, res) => {
-//   res.send('🎉 Evangadi Forum Backend is running!');
-// });
+app.get('/', (req, res) => {
+  res.send('🎉 Evangadi Forum Backend is running!');
+});
 
 // 📁 Route Imports
 const userRoutes = require('./routes/userRoute');
