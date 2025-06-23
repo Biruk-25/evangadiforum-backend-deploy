@@ -18,12 +18,12 @@ const authenticate = require('./middleware/authenticate');
 // 📦 Built-in middleware
 app.use(express.json()); 
  
-
-const allowedOrigins = [
-  'http://localhost:3000',
+// app.options('*', cors()); 
+ const allowedOrigins = [
+  'http://localhost:5000',
   'http://localhost:5173',
   'https://frontend.waluwa.com',
-  'https://biruk-25.github.io'
+  'https://biruk-25.github.io/Evangadi-Forum/'
 ];
 
 app.use(cors({
@@ -34,13 +34,15 @@ app.use(cors({
       callback(new Error('CORS not allowed for this origin: ' + origin));
     }
   },
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 }));
 
-// ✅ Preflight request handler/this is essential for CORS to fully work
-app.options('*', cors()); 
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  next();
+});
+
 
 
 
