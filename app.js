@@ -34,14 +34,13 @@ app.use(cors({
       callback(new Error('CORS not allowed for this origin: ' + origin));
     }
   },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 }));
 
-// app.use(cors({
-//   origin: ['http://localhost:3000', 'https://frontend.waluwa.com'],
-//   credentials: true
-// }));
-
+// ✅ Preflight request handler/this is essential for CORS to fully work
+app.options('*', cors()); 
 
 
 
