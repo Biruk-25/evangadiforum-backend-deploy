@@ -17,12 +17,23 @@ const authenticate = require('./middleware/authenticate');
 
 // 📦 Built-in middleware
 app.use(express.json()); 
-// app.use(cors());  
+ 
 
-//const cors = require('cors');
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:4173',
+  'https://frontend.waluwa.com',
+  'https://biruk-25.github.io'
+];
 
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://frontend.waluwa.com'],
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS not allowed for this origin: ' + origin));
+    }
+  },
   credentials: true
 }));
 
@@ -30,6 +41,8 @@ app.use(cors({
 //   origin: ['http://localhost:3000', 'https://frontend.waluwa.com'],
 //   credentials: true
 // }));
+
+
 
 
 // ✅ Health check route
@@ -46,7 +59,7 @@ const answerRoutes = require('./routes/answerRoute');
 app.use('/api/users', userRoutes); 
 app.use('/api/questions', questionRoutes); 
 app.use('/api/answers', authenticate, answerRoutes);   
-//app.use(cors({ origin: 'https://evangadiforum-frontend.netlify.app/login' }));
+
 
 // ▶️ Start server
 app.listen(port, () => {

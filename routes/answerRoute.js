@@ -13,6 +13,7 @@ router.post('/:questionid', authenticate, async (req, res) => {
   const { answer } = req.body;
   const { questionid } = req.params;
   const { id: userid } = req.user;
+  
 
   if (!answer || !answer.trim()) {
     return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Answer is required' });

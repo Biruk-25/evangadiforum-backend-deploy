@@ -160,6 +160,7 @@ const updateUser = async (req, res) => {
 // ❌ Delete user account
 const deleteUser = async (req, res) => {
   const { id } = req.user;
+console.log('Deleting question:', questionid, 'by user:', userid);
 
   try {
     // First, delete related questions
