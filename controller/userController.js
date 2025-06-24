@@ -63,8 +63,7 @@ const register = async (req, res) => {
 // 🔑 Login controller
 const login = async (req, res) => {
   const { email, password } = req.body;
-  console.log("Sending login response for:", user.email);
-
+  
   console.log("Login request received:", req.body);
  
   if (!email || !password) {

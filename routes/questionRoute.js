@@ -95,7 +95,7 @@ router.put('/:id', authenticate, async (req, res) => {
     );
 
     if (rows.length === 0) {
-      return res.status(StatusCodes.FORBidDEN).json({ message: 'You are not authorized to update this question' });
+      return res.status(StatusCodes.FORBIDDEN).json({ message: 'You are not authorized to update this question' });
     }
 
     await db.query(
@@ -124,7 +124,7 @@ router.delete('/:id', authenticate, async (req, res) => {
     );
 
     if (rows.length === 0) {
-      return res.status(StatusCodes.FORBidDEN).json({ message: 'You are not authorized to delete this question' });
+      return res.status(StatusCodes.FORBIDDEN).json({ message: 'You are not authorized to delete this question' });
     }
 
     await db.query('DELETE FROM questions WHERE questionid = ?', [questionid]);
