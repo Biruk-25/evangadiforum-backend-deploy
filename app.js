@@ -22,6 +22,7 @@ app.use(express.json());
 
 const allowedOrigins = [
   'http://localhost:5173',
+  'http://localhost:5174',
   'https://frontend.waluwa.com',
   'https://biruk-25.github.io',
 ];
