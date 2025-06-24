@@ -10,15 +10,13 @@ require('./db/dbConfig');
 // CORS setup for GitHub Pages
 const corsOptions = {
   origin: ['https://biruk-25.github.io'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE','PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
 };
-
-app.use(cors(corsOptions));
-
 app.use(express.json());
 
+app.use(express.json());
 // Routes
 const userRoutes = require('./routes/userRoute');
 const questionRoutes = require('./routes/questionRoute');
