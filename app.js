@@ -19,29 +19,12 @@ const authenticate = require('./middleware/authenticate');
 app.use(express.json()); 
  
 
-//  app.options('*', cors()); const allowedOrigins = [
-//   'http://localhost:5000',
-//   'http://localhost:5173',
-//   'https://frontend.waluwa.com',
-//   'https://biruk-25.github.io/Evangadi-Forum/'
-// ];
-
-// app.use(cors({
-//   origin: function (origin, callback) {
-//     if (!origin || allowedOrigins.includes(origin)) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error('CORS not allowed for this origin: ' + origin));
-//     }
-//   },
-//   credentials: true
-// }));
 const corsOptions = {
   origin: function (origin, callback) {
     const allowedOrigins = [
       'http://localhost:5173',
       'https://frontend.waluwa.com',
-      'https://biruk-25.github.io/Evangadi-Forum/',
+      'https://biruk-25.github.io',
     ];
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
