@@ -6,8 +6,12 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 // 🔐 Middleware to verify JWT and attach user info to req.user
 const authenticate = (req, res, next) => {
+  if (req.method === 'OPTIONS') 
+    {
+    return res.sendStatus(StatusCodes.NO_CONTENT); // 204
+  }
   const authHeader = req.headers.authorization;
-
+   
   // Check for Bearer token
   if (!authHeader?.startsWith('Bearer ')) {
     return res.status(StatusCodes.UNAUTHORIZED).json({
