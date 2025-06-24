@@ -11,7 +11,7 @@ require('./db/dbConfig');
 const corsOptions = {
   origin: ['https://biruk-25.github.io'],
   methods: ['GET', 'POST', 'PUT', 'DELETE','PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization','x-auth-token' ],
   credentials: true,
 };
 app.use(cors(corsOptions));
