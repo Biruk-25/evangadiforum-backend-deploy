@@ -18,14 +18,16 @@ const authenticate = require('./middleware/authenticate');
 // 📦 Built-in middleware
 app.use(express.json()); 
  
+//const cors = require('cors');
+
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://frontend.waluwa.com',
+  'https://biruk-25.github.io',
+];
 
 const corsOptions = {
   origin: function (origin, callback) {
-    const allowedOrigins = [
-      'http://localhost:5173',
-      'https://frontend.waluwa.com',
-      'https://biruk-25.github.io',
-    ];
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -33,19 +35,43 @@ const corsOptions = {
     }
   },
   credentials: true,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
-// Main CORS middleware for all requests
+// ✅ Middleware
 app.use(cors(corsOptions));
+
+// ✅ This handles preflight requests (OPTIONS)
+//app.options('/', cors(corsOptions));
+
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     const allowedOrigins = [
+//       'http://localhost:5173',
+//       'https://frontend.waluwa.com',
+//       'https://biruk-25.github.io',
+//     ];
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('CORS not allowed for this origin: ' + origin));
+//     }
+//   },
+//   credentials: true,
+// };
+
+// // Main CORS middleware for all requests
+// app.use(cors(corsOptions));
 
 // Proper preflight (OPTIONS) handler
 //app.options('/*', cors(corsOptions));
 
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+//   next();
+// });
 
 
 

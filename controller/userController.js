@@ -63,8 +63,10 @@ const register = async (req, res) => {
 // 🔑 Login controller
 const login = async (req, res) => {
   const { email, password } = req.body;
-  console.log('Login response:', res.data);
+  console.log("Sending login response for:", user.email);
 
+  console.log("Login request received:", req.body);
+ 
   if (!email || !password) {
     return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Email and password required' });
   }
