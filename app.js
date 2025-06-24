@@ -14,9 +14,9 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
 };
+app.use(cors(corsOptions));
 app.use(express.json());
 
-app.use(express.json());
 // Routes
 const userRoutes = require('./routes/userRoute');
 const questionRoutes = require('./routes/questionRoute');
